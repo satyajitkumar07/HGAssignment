@@ -24,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
     private int previousCenterPos;
-    private DataViewModel dataViewModel;
+//    private DataViewModel dataViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataViewModel= ViewModelProviders.of(this).get(DataViewModel.class);
-        updateAdapterUi();
+//        dataViewModel= ViewModelProviders.of(this).get(DataViewModel.class);
+//        updateAdapterUi();
         mRecyclerView=(RecyclerView)findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(MainActivity.this);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -74,16 +74,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateAdapterUi(){
-        if(dataViewModel!=null){
-            dataViewModel.getDataList().observe(this, new Observer<ArrayList<Integer>>() {
-                @Override
-                public void onChanged(@Nullable ArrayList<Integer> list) {
-                    highLightAdapter.setData(list);
-                }
-            });
-        }
-    }
+//    private void updateAdapterUi(){
+//        if(dataViewModel!=null){
+//            dataViewModel.getDataList().observe(this, new Observer<ArrayList<Integer>>() {
+//                @Override
+//                public void onChanged(@Nullable ArrayList<Integer> list) {
+//                    highLightAdapter.setData(list);
+//                }
+//            });
+//        }
+//    }
 
     private void fetchData(){
         new Thread(new Runnable() {
@@ -93,7 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        dataViewModel.setModelData(list);
+//                        dataViewModel.setModelData(list);
+                        if(highLightAdapter!=null){
+                            highLightAdapter.setData(list);
+                            highLightAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
             }
